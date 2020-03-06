@@ -5,6 +5,8 @@
 #include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -25,7 +27,8 @@ public:
     string getName();
     int setPrice(int);
     int getPrice();
-    
+    int getQuantity();
+    bool operator<(const Product &);
 };
 
 #endif
