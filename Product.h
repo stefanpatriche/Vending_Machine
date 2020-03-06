@@ -3,22 +3,29 @@
 #include <vector>
 #include <stdlib.h>
 #include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
 #ifndef _PRODUCT_H_
 #define _PRODUCT_H_
 
-class Product{
+class Product {
     string name;
     int price;
+    int quantity;
 
 public:
     Product(){};
-    Product(string, int);
+    Product(string, int, int);
     friend ostream &operator<<(ostream &, const Product &);
     friend istream &operator>>(istream &, Product &); 
-
+    string setName(string);
+    string getName();
+    int setPrice(int);
+    int getPrice();
+    
 };
 
 #endif

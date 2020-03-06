@@ -1,5 +1,5 @@
-75 Avira Prime
-35 Antivirus PRO
-50 Phantom VPN
-20 Password Manager
-25 System Speedup
+Avira Prime 75 5
+Antivirus PRO 35 3
+Phantom VPN 50 8
+Password Manager 20 2
+System Speedup 25 5

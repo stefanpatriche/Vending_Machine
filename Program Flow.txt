@@ -1,0 +1,18 @@
+**pentru optimizer scrie numele in fisier cu underscore (_ in loc de spatiu si apoi ori dam replace pe _ ori hashmap;**
+
+Initial se afiseaza produsele si disponibilitatea lor.
+Asignam un numar fiecarui tip de produs.
+
+
+Se cere utilizatorului sa aleaga metoda de plata (contactless card/cash):
+    - cazul card
+        se alege produsul
+        se cere apropierea cardului de terminal
+        se verifica informatiile
+        se proceseaza plata
+    
+    - cazul cash
+        se introduce suma de bani
+        se alege produsul dorit (intram intr un loop pana la terminarea banilor introdusi, in care se intreaba daca se doreste alt produs sau se returneaza rest) se si afiseaza restul de bani ramasi.
+    
+    - ambele cazuri: In caz ca se introduce un numar a carui cantitate de produse e zero atunci se trimite un avertisment si se afiseaza numerele produselor disponibile.
