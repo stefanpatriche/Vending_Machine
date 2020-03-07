@@ -17,7 +17,6 @@ public:
     void cardPayment();
     void cashPayment();
     bool checkStock(int);
-    
 };
 
 #endif

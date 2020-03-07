@@ -13,16 +13,21 @@ void VendingMachine::readProducts() {
 
     while(!input.eof()) {
         input >> p;
+
+        string name = p.getName();
+        replace(name.begin(), name.end(), '_', ' ');
+        p.setName(name);
+
         availableProducts.push_back(p);
         maxProductIndex++;
     }
     
-    //cout<< min_element(availableProducts.begin(), availableProducts.end())getPrice;
+    minPrice = (*min_element(availableProducts.begin(), availableProducts.end())).getPrice();
 
 }
 
 void VendingMachine::showAvailableProducts() {
-    vector<Product>::iterator it;
+    vector<Product>::const_iterator it;
 
     for(it = availableProducts.begin(); it != availableProducts.end(); it++) {
         cout << (it - availableProducts.begin()) + 1 << ". " << (*it);
@@ -35,61 +40,78 @@ void VendingMachine::pickPaymentMethod() {
 
     if (currentPaymentMethod == 1) {
         cardPayment();
-    } else {
+    } else if (currentPaymentMethod == 2) {
         cashPayment();
+    } else {
+        cout << "No payment method with that number!\n";
     }
     
 }
 
 void VendingMachine::cardPayment() {
-    cout << "Please enter the number associated with the product you want to purchase:" << "\n";
+    cout << "Please enter the number of the product you want to purchase:" << "\n";
     int productToPurchase;
+
     cin >> productToPurchase;
+    productToPurchase--;
 
     if(productToPurchase > maxProductIndex) {
-        cout << "There is no product associtated with that number!\nExiting...\n";
+        cout << "There is no product associated with that number!\nExiting...\n";
         exit(5);
     }
 
-    vector<Product>::iterator it;
-    for(it = availableProducts.begin(); it != availableProducts.end(); it++){
+    if(checkStock(productToPurchase)) {
+        cout << "Please insert your credit card and Enter PIN!\n";
+        sleep(2);
+        cout << "Processing... \n";
+        cout << "The payment was processed successfully!\n";
+        sleep(1);
+        cout << "Your product has been delivered!\n";
         
+        availableProducts.at(productToPurchase).setQuantity(availableProducts.at(productToPurchase).getQuantity() - 1);
+        cout << "Thank you! Have a nice day!\n";
+            
+    } else {
+        cout << "The requested product is no longer in stock. Please choose a different one!" << "\n";
     }
 
 }
 
 void VendingMachine::cashPayment() {
-    cout << "Put the money in the tray " << '\n';
+    cout << "Please insert the cash!" << '\n';
     int amount;
     cin >> amount;
-    cout << "You have " << amount << " of money left" << '\n';
+    
+    while(amount > minPrice) {
+        cout << "***You have " << amount << " dollars left." << '\n';
 
-    cout << "Please enter the number associated with the product you want to purchase:" << "\n";
-    int productToPurchase;
-    cin >> productToPurchase;
+        cout << "Please enter the number of the product you want to purchase:" << "\n";
 
-    if(!checkStock(productToPurchase)) {
-        return;
-    }
+        int productToPurchase;
+        cin >> productToPurchase;
+        productToPurchase--;
 
-    if(productToPurchase > maxProductIndex) {
-        cout << "There is no product associtated with that number!\nExiting...\n";
-        exit(5);
-    }
+        if(productToPurchase > maxProductIndex) {
+            cout << "There is no product associtated with that number!\nExiting...\n";
+            exit(5);
+        }
 
-    vector<Product>::iterator it;
-    for(it = availableProducts.begin(); it != availableProducts.end(); it++){
-        
+        if(checkStock(productToPurchase)) {
+            if(amount - availableProducts.at(productToPurchase).getPrice() > 0) {
+                amount -= availableProducts.at(productToPurchase).getPrice();
+                availableProducts.at(productToPurchase).setQuantity(availableProducts.at(productToPurchase).getQuantity() - 1);
+                cout << "Your product has been delivered!\n";
+            } else{
+                cout << "You don't have enough money to purchase this product!\n";
+            }
+        } else {
+            cout << "The requested product is no longer in stock. Please choose a different one!" << "\n";
+        }
     }
 }
 
 bool VendingMachine::checkStock(int pickedProduct) {
-    vector<Product>::iterator it = availableProducts.begin();
-
-    for(int i = 0; i < pickedProduct - 1; it++, i++);
-
-    if((*it).getQuantity() == 0) {
-        cout << "The requested product is no longer in stock. Please choose a different one!" << "\n";
+    if((availableProducts.at(pickedProduct)).getQuantity() == 0) {
         return false;
     }
 

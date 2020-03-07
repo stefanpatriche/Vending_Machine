@@ -3,3 +3,6 @@ build: main.cpp Product.h Product.cpp VendingMachine.cpp VendingMachine.h
 
 run: build
 	./vending-machine-exec
+
+clean:
+	rm -rf vending-machine-exec

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <algorithm>
+#include <unistd.h>
 
 
 using namespace std;
@@ -27,6 +28,7 @@ public:
     string getName();
     int setPrice(int);
     int getPrice();
+    int setQuantity(int);
     int getQuantity();
     bool operator<(const Product &);
 };
