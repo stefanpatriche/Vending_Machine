@@ -19,3 +19,6 @@ Se cere utilizatorului sa aleaga metoda de plata (contactless card/cash):
 
     modificare danelos.
     modificare ionut
+    modificare 2 danelos 
+    bla bla bani
+    bla
