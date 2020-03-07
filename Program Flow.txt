@@ -18,3 +18,4 @@ Se cere utilizatorului sa aleaga metoda de plata (contactless card/cash):
     - ambele cazuri: In caz ca se introduce un numar a carui cantitate de produse e zero atunci se trimite un avertisment si se afiseaza numerele produselor disponibile.
 
     modificare danelos.
+    modificare ionut
