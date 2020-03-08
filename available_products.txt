@@ -1,5 +1,5 @@
 Avira_Prime 75 5
-Antivirus_PRO 35 0
+Antivirus_PRO 35 1
 Phantom_VPN 50 8
 Password_Manager 20 2
 System_Speedup 25 5

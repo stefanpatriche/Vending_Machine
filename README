@@ -1,0 +1,52 @@
+HackItAll 2020 - Avira Vending Machine
+
+Echipa Runtime Terror
+    Mihalache Daniel Cristian
+    Patriche Stefan
+    Trisca Ionut
+
+README
+
+Programul creat de noi are urmatoarea structura:
+    O clasa Product care contine numele produsului, pretul si cantitatea
+de produse de acel tip ramase in automat si o clasa VendingMachine ce
+simuleaza automatul si contine un vector de Product, numarul de
+tipuri de produse si cel mai mic pret al listei de produse.
+    Pentru a initializa stocul programul citeste din fisierul
+available_products.txt toate produsele disponibile. 
+    In acest fisier informatia este structurata pe linii astfel:
+nume_produs pret_produs cantitate_produs.
+
+Acest program functioneaza astfel:
+    Initial citeste produsele din fisierul available_products.txt pentru a
+initializa stocul. Acest stoc este memorat in vectorul availableProducts. 
+    La urmatorul pas se afiseaza produsele din stoc, impreuna cu pretul
+si cantitatea lor. De asemenea este afisat si index-ul produsului din
+vector ca numar cu care acesta va fi selectat.
+    Dupa afisarea produselor se alege metoda de plata si apoi se
+procedeaza dupa caz:
+    - cazul card: In acest caz se cere utlizatorului sa introduca numarul
+    produsului pe care vrea sa il cumpere, iar daca acesta se afla in
+    stoc se va cere introducerea numarului cardului si a PIN-ului pentru
+    a fi verificate. Daca verificarea se realizeaza cu succes se va
+    efectua tranzactia si se va reseta automatul. Daca nu se realizeaza
+    cu succes se va informa utilizatorul si apoi se va reseta aparatul.
+    Daca produsul nu se afla in stoc se va cere introducerea altui
+    numar.
+
+    - cazul cash: In acest caz se cere utilizatorului sa introduca o suma
+    de bani, apoi se cere sa se aleaga produsul dorit. Aparatul continua
+    sa ceara cumpararea unui produs pana cand suma ramasa este mai mica
+    decat pretul minim sau pana cand utilizatorul cere rest prin introducerea
+    caracterului R. 
+    Toata aceasta functionalitate este introdusa intr-o bucla infinita 
+pentru a asigura functionarea continua a aparatului.
+    Daca aparatul nu mai are nimic pe stoc acest va intoarce -1 si va afisa
+un mesaj ce indica acest lucru.
+
+Rulare:
+Pentru rularea programului pe linux este nevoie de make.
+Pentru compilare executati comanda "make build" care va creea un executabil
+"vending-machine-exec" care poate fi rulat cu "make run".
+Pentru stergerea fisierelor obiect generate si a executabilului executati 
+comanda "make clean".

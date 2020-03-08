@@ -19,6 +19,7 @@ using namespace std;
  * for a specific product.
  */
 class Product {
+private:
     string name;
     int price;
     int quantity;
@@ -28,12 +29,12 @@ public:
     Product(string, int, int);
     friend ostream &operator<<(ostream &, const Product &);
     friend istream &operator>>(istream &, Product &); 
-    string setName(string);
-    string getName();
-    int setPrice(int);
-    int getPrice();
-    int setQuantity(int);
-    int getQuantity();
+    void setName(string);
+    string getName() const;
+    void setPrice(int);
+    int getPrice() const;
+    void setQuantity(int);
+    int getQuantity() const;
     bool operator<(const Product &);
 };
 

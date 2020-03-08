@@ -12,29 +12,31 @@ ostream &operator<<(ostream &dev, const Product &product) {
         << " costs " << product.price << "$ " 
         << "and there are " << product.quantity << " units available.\n"; 
 
+    return dev;
+
 }
 
-string Product::setName(string name) {
+void Product::setName(string name) {
     this->name = name;
 }
 
-string Product::getName() {
+string Product::getName() const {
     return name;
 }
 
-int Product::setPrice(int price) {
+void Product::setPrice(int price) {
     this->price = price;
 }
 
-int Product::getPrice() {
+int Product::getPrice() const {
     return price;
 }
 
-int Product::setQuantity(int quantity) {
+void Product::setQuantity(int quantity) {
     this->quantity = quantity;
 }
 
-int Product::getQuantity() {
+int Product::getQuantity() const {
     return quantity;
 }
 
@@ -42,6 +44,7 @@ istream &operator>>(istream &dev, Product &product) {
     dev >> product.name;
     dev >> product.price;
     dev >> product.quantity;
+    return dev;
 }
 
 bool Product::operator<(const Product &product) {
