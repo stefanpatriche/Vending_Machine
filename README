@@ -41,7 +41,7 @@ procedeaza dupa caz:
     caracterului R. 
     Toata aceasta functionalitate este introdusa intr-o bucla infinita 
 pentru a asigura functionarea continua a aparatului.
-    Daca aparatul nu mai are nimic pe stoc acest va intoarce -1 si va afisa
+    Daca aparatul nu mai are nimic pe stoc acesta va intoarce -1 si va afisa
 un mesaj ce indica acest lucru.
 
 Rulare:
