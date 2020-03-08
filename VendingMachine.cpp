@@ -35,85 +35,116 @@ void VendingMachine::showAvailableProducts() {
 }   
 
 void VendingMachine::pickPaymentMethod() {
-    cout << "Pick your payment method (1 for card/2 for cash)" << '\n';
-    cin >> currentPaymentMethod;
+    int paymentMethod; // 1 - card / 2 - cash
 
-    if (currentPaymentMethod == 1) {
+    cout << "\nPick your payment method (1 for card/2 for cash)" << '\n';
+    cin >> paymentMethod;
+
+    if (paymentMethod == 1) {
         cardPayment();
-    } else if (currentPaymentMethod == 2) {
+    } else if (paymentMethod == 2) {
         cashPayment();
     } else {
         cout << "No payment method with that number!\n";
+        cout << "Restarting...\n";
     }
     
 }
 
 void VendingMachine::cardPayment() {
-    cout << "Please enter the number of the product you want to purchase:" << "\n";
+    cout << "\nPlease enter the number of the product you want to purchase:" << "\n";
     int productToPurchase;
+    string cardNumber;
+    string pin;
 
     cin >> productToPurchase;
     productToPurchase--;
 
     if(productToPurchase > maxProductIndex) {
-        cout << "There is no product associated with that number!\nExiting...\n";
-        exit(5);
+        cout << "\nThere is no product associated with that number!\nExiting...\n";
+        return;
     }
 
-    if(checkStock(productToPurchase)) {
-        cout << "Please insert your credit card and Enter PIN!\n";
-        sleep(2);
-        cout << "Processing... \n";
-        cout << "The payment was processed successfully!\n";
-        sleep(1);
-        cout << "Your product has been delivered!\n";
+    while(!checkStock(productToPurchase)){
+        cout << "\nThe requested product is no longer in stock.\nPlease enter a different number:" << "\n";
+        cin >> productToPurchase;
+        productToPurchase--;
+    }
+    
+    cout << "\nPlease enter your credit card number:\n";
+    cin >> cardNumber;
+    cout << "Please enter your PIN:\n";
+    cin >> pin;
+    cout << "Processing... \n";
+    sleep(2);
+
+    if(checkCardInfo(cardNumber, pin)) {
+        cout << "\nThe payment was processed successfully!\n";
+        cout << availableProducts.at(productToPurchase).getPrice() << " dollars have been deducted from your account!\n";
+        
+        cout << "\nYour product \"" << availableProducts.at(productToPurchase).getName() <<"\" has been delivered!\n";
         
         availableProducts.at(productToPurchase).setQuantity(availableProducts.at(productToPurchase).getQuantity() - 1);
-        cout << "Thank you! Have a nice day!\n";
-            
     } else {
-        cout << "The requested product is no longer in stock. Please choose a different one!" << "\n";
+        cout << "Wrong card information!\nRestarting...\n";
     }
+    cout << "Thank you! Have a nice day!\n";
 
 }
 
 void VendingMachine::cashPayment() {
-    cout << "Please insert the cash!" << '\n';
+    cout << "\nPlease insert the cash:" << '\n';
     int amount;
     cin >> amount;
     
-    while(amount > minPrice) {
-        cout << "***You have " << amount << " dollars left." << '\n';
-
-        cout << "Please enter the number of the product you want to purchase:" << "\n";
+    while(amount >= minPrice) {
+        cout << "\n***You have " << amount << " dollars left." << '\n';
+        cout << "Please enter the number of the product you want to purchase!\nIf you want change enter R:" << "\n";
 
         int productToPurchase;
         cin >> productToPurchase;
+
+        if(productToPurchase == 0) {
+            cout << "\nDelivering a change of " << amount << " dollars\n";
+            cout << "Thank you! Have a nice day!\n";
+            return;
+        }
+
         productToPurchase--;
+
+        while(!checkStock(productToPurchase)){
+            cout << "\nThe requested product is no longer in stock.\nPlease enter a different number:" << "\n";
+            cin >> productToPurchase;
+            productToPurchase--;
+        }
 
         if(productToPurchase > maxProductIndex) {
             cout << "There is no product associtated with that number!\nExiting...\n";
-            exit(5);
+            return;
         }
 
-        if(checkStock(productToPurchase)) {
-            if(amount - availableProducts.at(productToPurchase).getPrice() > 0) {
-                amount -= availableProducts.at(productToPurchase).getPrice();
-                availableProducts.at(productToPurchase).setQuantity(availableProducts.at(productToPurchase).getQuantity() - 1);
-                cout << "Your product has been delivered!\n";
-            } else{
-                cout << "You don't have enough money to purchase this product!\n";
-            }
-        } else {
-            cout << "The requested product is no longer in stock. Please choose a different one!" << "\n";
+        if(amount - availableProducts.at(productToPurchase).getPrice() >= 0) {
+            amount -= availableProducts.at(productToPurchase).getPrice();
+            availableProducts.at(productToPurchase).
+                setQuantity(availableProducts.at(productToPurchase).getQuantity() - 1);
+            cout << "Your product \"" << availableProducts.at(productToPurchase).getName() <<"\" has been delivered!\n";
+        } else{
+            cout << "You don't have enough money to purchase this product!\n";
         }
     }
+
+    if(amount > 0) {
+        cout << "You cannot purchase any other product with the money left!\n";
+        cout << "Delivering a change of " << amount << " dollars\n";
+    }
+
+    cout << "Thank you for your purchase! Have a nice day!\n";
 }
 
 bool VendingMachine::checkStock(int pickedProduct) {
-    if((availableProducts.at(pickedProduct)).getQuantity() == 0) {
-        return false;
-    }
+    return !(availableProducts.at(pickedProduct).getQuantity() == 0);
+}
 
-    return true;
+bool VendingMachine::checkCardInfo(string cardNumber, string pin) {
+    return cardNumber.size() == 16 && pin.size() == 4;
 }
