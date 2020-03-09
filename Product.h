@@ -19,7 +19,6 @@ using namespace std;
  * for a specific product.
  */
 class Product {
-private:
     string name;
     int price;
     int quantity;

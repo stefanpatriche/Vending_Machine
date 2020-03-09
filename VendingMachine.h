@@ -10,8 +10,6 @@
  * It can return change at the end of a purchase for cash purchases.
  */
 class VendingMachine {
-
-private:
     /**
      * Vector that holds all of the products
      */
